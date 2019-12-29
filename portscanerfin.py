@@ -2,14 +2,18 @@
 import socket
 import sys
 from datetime import datetime
+from colorama import Fore, Back, Style
 
 def scan_ports(remoteServer, firstPort, lastPort):
     remoteServerIP = socket.gethostbyname(remoteServer)
 
     # Print a nice banner with information on which host we are about to scan
-    print("-" * 60)
+    print(Fore.RED)
+    print("-" * 80)
+    print(Fore.GREEN)
     print("Please wait, scanning remote host:", remoteServerIP, "Ports from:", firstPort, "to", lastPort)
-    print("-" * 60)
+    print(Fore.RED)
+    print("-" * 80)
 
     # Check what time the scan started
     t1 = datetime.now()
@@ -21,6 +25,7 @@ def scan_ports(remoteServer, firstPort, lastPort):
             result = sock.connect_ex((remoteServerIP, port))
             #print("Now we scan Port:", port)
             if result == 0:
+                print(Fore.YELLOW)
                 print("Port {}:    Open".format(port))
             sock.close()
 
@@ -43,14 +48,15 @@ def scan_ports(remoteServer, firstPort, lastPort):
     total = t2 - t1
 
     # Printing the information to screen
+    print(Fore.MAGENTA)
     print('Scanning Completed in: ', total)
+    print('\033[39m')
 
 def main():
+    print(Fore.CYAN)
     remoteServer = input("Enter a remote host to scan: ")
-    firstPort = input("Enter first port in range: ")
-    lastPort = input("Enter last port in range: ")
-    firstPort = int(firstPort)
-    lastPort = int(lastPort)
+    firstPort = int(input("Enter first port in range: "))
+    lastPort = int(input("Enter last port in range: "))
     scan_ports(remoteServer, firstPort, lastPort)
 
 if __name__ == "__main__":
