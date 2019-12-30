@@ -2,18 +2,23 @@
 import socket
 import sys
 import os
-clear = lambda: os.system('clear')  # on Linux System
-clear()
+
+
 from datetime import datetime
 from colorama import Fore, Back, Style
 
-def scan_ports(remoteServer, firstPort, lastPort):
-    remoteServerIP = socket.gethostbyname(remoteServer)
+
+def clear() -> object:
+    os.system('clear')
+
+
+def scan_ports(remoteserver, firstport, lastport):
+    remoteserverip = socket.gethostbyname(remoteserver)
     # Print a nice banner with information on which host we are about to scan
     print(Fore.RED)
     print("-" * 80)
     print(Fore.GREEN)
-    print("Please wait, scanning remote host:", remoteServerIP, "Ports from:", firstPort, "to", lastPort)
+    print("Please wait, scanning remote host:", remoteserverip, "Ports from:", firstport, "to", lastport)
     print(Fore.RED)
     print("-" * 80)
     print(Fore.YELLOW)
@@ -22,10 +27,10 @@ def scan_ports(remoteServer, firstPort, lastPort):
     t1 = datetime.now()
 
     try:
-        for port in range(firstPort, lastPort):
+        for port in range(firstport, lastport):
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(0.1)
-            result = sock.connect_ex((remoteServerIP, port))
+            result = sock.connect_ex((remoteserverip, port))
             if result == 0:
                 print("Port {}:    Open".format(port))
             sock.close()
@@ -53,12 +58,15 @@ def scan_ports(remoteServer, firstPort, lastPort):
     print('Scanning Completed in: ', total)
     print('\033[39m')
 
-def main():
+
+def main() -> object:
+    clear()
     print(Fore.CYAN)
-    remoteServer = input("Enter a remote host to scan: ")
-    firstPort = int(input("Enter first port in range: "))
-    lastPort = int(input("Enter last port in range: "))
-    scan_ports(remoteServer, firstPort, lastPort)
+    remoteserver = str(input("Enter a remote host to scan: "))
+    firstport = int(input("Enter first port in range: "))
+    lastport = int(input("Enter last port in range: "))
+    scan_ports(remoteserver, firstport, lastport)
+
 
 if __name__ == "__main__":
     main()
