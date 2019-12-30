@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 import socket
 import sys
+import os
+clear = lambda: os.system('clear')  # on Linux System
+clear()
 from datetime import datetime
 from colorama import Fore, Back, Style
 
 def scan_ports(remoteServer, firstPort, lastPort):
     remoteServerIP = socket.gethostbyname(remoteServer)
-
     # Print a nice banner with information on which host we are about to scan
     print(Fore.RED)
     print("-" * 80)
@@ -14,6 +16,7 @@ def scan_ports(remoteServer, firstPort, lastPort):
     print("Please wait, scanning remote host:", remoteServerIP, "Ports from:", firstPort, "to", lastPort)
     print(Fore.RED)
     print("-" * 80)
+    print(Fore.YELLOW)
 
     # Check what time the scan started
     t1 = datetime.now()
@@ -23,9 +26,7 @@ def scan_ports(remoteServer, firstPort, lastPort):
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(0.1)
             result = sock.connect_ex((remoteServerIP, port))
-            #print("Now we scan Port:", port)
             if result == 0:
-                print(Fore.YELLOW)
                 print("Port {}:    Open".format(port))
             sock.close()
 
