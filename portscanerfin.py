@@ -62,7 +62,7 @@ def scan_ports(remoteserver, firstport, lastport):
 def main() -> object:
     clear()
     print(Fore.CYAN)
-    remoteserver = str(input("Enter a remote host to scan: "))
+    remoteserver = input("Enter a remote host to scan: ")
     firstport = int(input("Enter first port in range: "))
     lastport = int(input("Enter last port in range: "))
     scan_ports(remoteserver, firstport, lastport)
